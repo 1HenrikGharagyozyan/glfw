@@ -1,5 +1,5 @@
 project "GLFW"
-    kind "StaticLib"
+    kind "SharedLib"
     language "C"
     staticruntime "On"
     
@@ -19,7 +19,7 @@ project "GLFW"
         "src/vulkan.c",
         "src/window.c",
 
-        -- null backend (нужен для stub-реализаций)
+        -- null backend (stub-реализации)
         "src/null_init.c",
         "src/null_joystick.c",
         "src/null_monitor.c",
@@ -48,6 +48,31 @@ project "GLFW"
             "_GLFW_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
+    
+    filter "system:linux"
+        pic "On"  -- важно для SharedLib
+        files
+        {
+            "src/x11_init.c",
+            -- "src/x11_joystick.c",
+            "src/x11_monitor.c",
+            "src/x11_window.c",
+            "src/xkb_unicode.c",
+            "src/posix_time.c",
+            "src/posix_thread.c",
+            "src/glx_context.c",
+            "src/egl_context.c",
+            "src/osmesa_context.c",
+            "src/linux_joystick.c",
+            "src/posix_module.c",
+            "src/posix_poll.c"
+            -- "src/bsd_joystick.c" -- удалено, файла нет
+        }
+        defines 
+        { 
+            "_GLFW_X11"
+        }
+    filter {}
 
     filter "configurations:Debug"
         runtime "Debug"
