@@ -37,6 +37,15 @@ project "GLFW"
 			"src/linux_joystick.c"
 		}
 
+		-- Include null platform sources to satisfy references when built as a static lib
+		files
+		{
+			"src/null_init.c",
+			"src/null_monitor.c",
+			"src/null_window.c",
+			"src/null_joystick.c"
+		}
+
 		defines
 		{
 			"_GLFW_X11"
